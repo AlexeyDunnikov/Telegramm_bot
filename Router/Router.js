@@ -1,4 +1,4 @@
-const MainController = require("../controllers/main");
+const MainController = require("../controllers/MainController");
 
 module.exports = class Router {
   static _instance = null;
@@ -35,6 +35,8 @@ module.exports = class Router {
       return;
     }
 
-    command.controller[command.func](args);
+    command.controller.file[
+        command.controller.method
+    ](args);
   }
 };
