@@ -49,48 +49,13 @@ const startGame = async (chatId) => {
 };
 
 Route.command("/info", MainController, "info");
-
+Route.command("/start", MainController, 'start');
 
 const start = () => {
   bot.on("message", async (msg) => {
     const text = msg.text;
-    const chatId = msg.chat.id;
-    
-    Route.command("/start", MainController, "start", bot, chatId);
 
-    Router.getInstance().middleware(text);
-//      else if (text === "/info") {
-//       await route.command("/info", MainController, "info");
-//     } else if (text === "/laravel") {
-//       return bot.sendMessage(
-//         chatId,
-//         `Инструкция по поднятию большинство проектов по Laravel:
-// 1. Делаем клон git репозитория:
-// - git clone https://Pavel@bitbucket.org/kedalo/movie.git
-//  (https://Pavel@bitbucket.org/kedalo/movie.git)* Ссылку подставляем свою
-
-// 2. После того как мы скачали проект, делаем копию файла .env.example с названием .env
-
-// 3. Подставляем свои значения к базе данных и к другим важным переменным в .env
-
-// 4. Дальше подгружаем библиотеки
-// - composer install
-// * Если нужно обновить - composer update
-
-// 5. После делаем миграции:
-// - php artisan migrate:fresh —seed (два тире -)
-// * Данная команда удаляет все таблицы из бд, после загружает их заново и подгружает все сиды.
-// * Для подгрузки новых миграций, достаточно написать php artisan migrate
-
-// 6. Для запуска сайта достаточно написать:
-// - php artisan serve
-// * Если есть возможность разметить на апаче или на nginx, то лучше разместить их там.`
-//       );
-//     } else if (text === "/game") {
-//       return startGame(chatId);
-//     } else {
-//       return bot.sendMessage(chatId, "Я тебя не понимаю, попробуй еще раз)");
-//     }
+    Router.getInstance().middleware(text, { bot, msg });
   });
 
   bot.on("callback_query", async (msg) => {

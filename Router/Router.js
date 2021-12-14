@@ -27,13 +27,14 @@ module.exports = class Router {
     return this;
   }
 
-  middleware(text) {
-    this.routes.forEach(async (r) => {
-      if (r.url === text) {
-        const funcName = r.func;
-        console.log(r);
-        return await r.controller[funcName](r.args);
-      }
-    });
+  middleware(text, args) {
+    const [CMD] = text.split(/\s+/);
+    const command = this.routes.find(x => x.url === CMD);
+
+    if(command === null || command === undefined) {
+      return;
+    }
+
+    command.controller[command.func](args);
   }
 };
